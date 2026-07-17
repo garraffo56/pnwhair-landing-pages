@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import Fab from '@/components/fab/Fab'
 import './globals.css'
 
 export const metadata = {
@@ -44,6 +45,7 @@ fbq('track', 'PageView');`,
         />
       </head>
       <body>
+        <Fab client="pnw" />
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-W9LDWCQ7"
