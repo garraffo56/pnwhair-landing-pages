@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import DniSwap from '@/components/DniSwap'
 import GaTag from '@/components/GaTag'
 import Fab from '@/components/fab/Fab'
 import './globals.css'
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body>
           <GaTag />
         <Fab client="pnw" />
+        <DniSwap />
         {children}
       </body>
     </html>
