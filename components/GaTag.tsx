@@ -1,5 +1,6 @@
 'use client'
 import Script from 'next/script'
+import { usePathname } from 'next/navigation'
 
 /* GA4 ONLY. GTM-W9LDWCQ7 was removed from this landing page app on 2026-08-15 at
    Joe's direction. Measured live that day it delivered Microsoft Clarity session
@@ -15,7 +16,33 @@ import Script from 'next/script'
    removing the beacon achieves nothing (H-32). */
 const GA_ID = 'G-D9ZKP1B4XZ'
 
+
+/* HEALTH-INTENT ROUTE GATE — added 2026-08-17 with the /c/consult build.
+
+   /c/consult collects a name, email, mobile, a Norwood/Ludwig selection and a
+   prior-procedure answer. That is health-intent input in a form, and H-26 /
+   §6 failure mode 7 make a browser analytics tag on such a page non-waivable
+   at the skill layer; these practices are BAA-covered and Google will not sign
+   one for GA4. Server-side delivery would not launder it either (H-32) — the
+   restriction follows the data, not the pipe.
+
+   SCOPE IS DELIBERATELY NARROW: this suppresses the tag on the consult route
+   ONLY. It does not change any existing page. The wider question — that this
+   app also runs GA4 on its other /c/ and /m/ consult and evaluation form
+   pages, which are the same shape — is a real finding and is Joe's call, with
+   the RHRLI precedent being that he directed GTM removed from the landing
+   pages fleet-wide on 2026-08-15. Do not widen this gate without that call.
+
+   Suppressing a tag on a medical page can only ever reduce exposure, so this
+   edit cannot hide a violation. */
+const HEALTH_INTENT_ROUTES = ['/c/consult']
+const isHealthIntent = (p: string) =>
+  HEALTH_INTENT_ROUTES.some((r) => p === r || p.startsWith(r + '/'))
+
 export default function GaTag() {
+  const pathname = usePathname() || ''
+  if (isHealthIntent(pathname)) return null
+
   return (
     <>
       <Script
