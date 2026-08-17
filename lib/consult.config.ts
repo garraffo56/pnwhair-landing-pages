@@ -97,12 +97,10 @@ export const CONSULT = {
    sub-account while fieldKey stays byte-identical; matching on names is what
    made 11 of 28 custom values unreachable across the whole fleet.
 
-   EMPTY, DELIBERATELY. On 2026-08-17 this sub-account's PIT answered
-   401 "The token is not authorized for this scope" on
-   GET /locations/xNWd372hSvvPMkMQbR61/customFields, retried with backoff, from both
-   token files. So the map could not be seeded from the live API, and it is left
-   empty rather than guessed: a PUT with a key that does not resolve returns
-   200 succeeded and silently discards the value, which reads as working.
+   SEEDED FROM THE LIVE API on 2026-08-17, after this sub-account's token was given
+   locations/customFields.readonly. 49 fields were read and matched by
+   fieldKey. Regenerate from the API if the sub-account changes; never retype it and
+   never copy another client's map.
 
    writeCustomFields() therefore returns {written: 0, reason} — a reported
    no-op, never a silent one. The click id is still captured on the page and
@@ -112,4 +110,20 @@ export const CONSULT = {
 
    TO FIX: mint a PIT for this sub-account with locations/customFields readonly,
    then regenerate this map FROM THE API — never by copying RHRLI's. */
-export const CONSULT_FIELD_MAP: Record<string, string> = {}
+export const CONSULT_FIELD_MAP: Record<string, string> = {
+  /* The click id. This sub-account spells it `contact.gclid_custom` — the spelling
+     differs per client (gclidof / gclid_custom), which is exactly why this is
+     seeded from the API and never copied from another client (H-41). */
+  gclid: 'contact.gclid_custom',
+  utm_source: 'contact.utm_source',
+  utm_medium: 'contact.utm_medium',
+  utm_campaign: 'contact.utm_campaign',
+  utm_term: 'contact.utm_term',
+  utm_content: 'contact.utm_content',
+
+  /* NOT MAPPED, because no field with these keys exists on this sub-account:
+     wbraid, gbraid, keyword, matchtype, fbclid, msclkid, campaignid, adgroupid.
+     Captured on the page and dropped at the CRM boundary rather than written to a
+     guessed key — a PUT with an unresolvable fieldKey returns 200 and silently
+     discards the value, which reads as working (H-41).  */
+}
