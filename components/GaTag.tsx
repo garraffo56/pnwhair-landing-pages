@@ -26,16 +26,27 @@ const GA_ID = 'G-D9ZKP1B4XZ'
    one for GA4. Server-side delivery would not launder it either (H-32) — the
    restriction follows the data, not the pipe.
 
-   SCOPE IS DELIBERATELY NARROW: this suppresses the tag on the consult route
-   ONLY. It does not change any existing page. The wider question — that this
-   app also runs GA4 on its other /c/ and /m/ consult and evaluation form
-   pages, which are the same shape — is a real finding and is Joe's call, with
-   the RHRLI precedent being that he directed GTM removed from the landing
-   pages fleet-wide on 2026-08-15. Do not widen this gate without that call.
+   WIDENED 2026-08-24 TO THE WHOLE /c PREFIX, on Joe's explicit call. The
+   narrow /c/consult scope below was flagged in this comment as needing that
+   decision, and the finding that forced it: PNW's live money campaign
+   (23741108566, $140/day) sends 100% of its paid clicks to /c/hair-restoration
+   and /c/hair-loss-treatment, both of which mount a GHL consult form and both
+   of which were firing GA4. Every /c route in this app mounts a form
+   (hair-restoration, hair-loss-treatment, evaluation, consult, thank-you), so
+   the prefix and the health-intent set are the same set. Gating the prefix
+   rather than listing routes is deliberate: a route gate written against the
+   routes that existed the day it was written goes silently wrong the moment a
+   route is added (H-45), which is exactly what happened here.
+
+   Only /cookie-policy and /privacy-policy still receive the tag. / redirects
+   to /c/evaluation.
 
    Suppressing a tag on a medical page can only ever reduce exposure, so this
-   edit cannot hide a violation. */
-const HEALTH_INTENT_ROUTES = ['/c/consult']
+   edit cannot hide a violation. Widening it back is a separate decision and
+   belongs to Joe.
+
+   */
+const HEALTH_INTENT_ROUTES = ['/c']
 const isHealthIntent = (p: string) =>
   HEALTH_INTENT_ROUTES.some((r) => p === r || p.startsWith(r + '/'))
 
