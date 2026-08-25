@@ -5,6 +5,14 @@ import Fab from '@/components/fab/Fab'
 import './globals.css'
 
 export const metadata = {
+  // metadataBase is load-bearing, not boilerplate. Next.js resolves every
+  // RELATIVE metadata URL against it, and with it unset the build falls back to
+  // http://localhost:3000 — so the deployed pages served
+  // <meta property="og:image" content="http://localhost:3000/images/pnw-logo.png">
+  // to the public internet. Verified live 2026-08-25 on all three /c routes.
+  // It fails silently and invisibly: the page renders perfectly, nothing errors,
+  // and the defect lives only in a meta tag no human looks at (H-45).
+  metadataBase: new URL('https://hair.pnwhairrestoration.com'),
   openGraph: {
     images: [{ url: '/images/pnw-logo.png', width: 1016, height: 239, alt: 'PNW Hair Restoration' }],
   },
