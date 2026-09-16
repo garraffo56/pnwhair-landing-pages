@@ -60,7 +60,7 @@ export const CONSULT = {
   /* null means NO REACHABLE TERMS PAGE for this practice. The consent notice
      omits the Terms clause rather than linking to a 404, and the footer omits
      the link. A terms page on this subdomain is wanted before ads point here. */
-  termsUrl: null,
+  termsUrl: '/terms-of-service',
   /* null means the feed could not be read. The confirmation page renders no
      "while you wait" section at all rather than inventing one. */
   postsApi: 'https://pnwhairrestoration.com/wp-json/wp/v2/posts?per_page=3&_fields=id,link,date,title',

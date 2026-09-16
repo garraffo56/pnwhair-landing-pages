@@ -30,7 +30,7 @@ export default function Page() {
         )}
       </main>
       <footer style={{ background: MIST, padding: '22px 24px', textAlign: 'center', fontSize: 13, color: '#5a6272' }}>
-        &copy; 2026 PNW Hair Restoration &nbsp;&middot;&nbsp; <a href="/privacy-policy" style={{ color: '#333' }}>Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/cookie-policy" style={{ color: '#333' }}>Cookie Policy</a>
+        &copy; 2026 PNW Hair Restoration &nbsp;&middot;&nbsp; <a href="/privacy-policy" style={{ color: '#333' }}>Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/cookie-policy" style={{ color: '#333' }}>Cookie Policy</a> &nbsp;&middot;&nbsp; <a href="/terms-of-service" style={{ color: '#333' }}>SMS Terms</a>
       </footer>
     </div>
   )
