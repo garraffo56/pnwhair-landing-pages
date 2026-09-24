@@ -80,8 +80,8 @@ function ArtasSection() {
   return (
     <section style={{ background: WHITE }}>
       <div className="pnw-pad" style={{ maxWidth: 1100, margin: '0 auto', padding: '58px 48px 64px' }}>
-        <h2 className="pnw-h2" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 30, color: INK, textTransform: 'uppercase' }}>
-          The ARTAS&reg; iX Robotic Hair Restoration System
+        <h2 className="pnw-h2" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 30, color: INK }}>
+          THE ARTAS&reg; iX ROBOTIC HAIR RESTORATION SYSTEM
         </h2>
         <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 13, color: TEAL, textTransform: 'uppercase', marginTop: 10 }}>
           Physician-directed robotic follicular unit extraction, in a regulated clinical setting.
@@ -201,7 +201,7 @@ export default function PnwLP({
       <section style={{ background: MIST }}>
         <div className="pnw-hero-grid pnw-pad" style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: 44, alignItems: 'stretch', maxWidth: 1200, margin: '0 auto', padding: '44px 48px 52px' }}>
           <div>
-            <h1 className="pnw-hero-h1" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 40, lineHeight: 1.16, color: INK, textTransform: 'uppercase', maxWidth: 560 }}>{h1}</h1>
+            <h1 className="pnw-hero-h1" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 40, lineHeight: 1.16, color: INK, maxWidth: 560 }}>{h1}</h1>
             <p style={{ marginTop: 16, fontSize: 17, lineHeight: 1.55, maxWidth: 520 }}>{heroSub}</p>
             <p style={{ marginTop: 10, fontSize: 16, lineHeight: 1.55, maxWidth: 520 }}>
               Request a consultation to understand hair loss and explore the available options.
