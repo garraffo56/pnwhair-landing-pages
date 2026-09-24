@@ -60,10 +60,12 @@ const PlanGlyph = () => (<svg {...ic} aria-hidden="true"><path d="M9 3h6v4H9z" /
    The H1 is deliberately symbol-free (that policy's H1 carve-out), so the first
    symbol-bearing mention is the H2 below.
 
-   NO GENERATION DESIGNATOR IS WRITTEN ANYWHERE ON THIS PAGE. The policy requires
-   confirming whether the practice runs an iX or an iXi before writing either, and
-   that is unconfirmed for PNW — their own site names the system with no generation.
-   Writing the wrong one is a rebuild, so the bare mark is used until Joe confirms.
+   GENERATION CONFIRMED iX, FROM THE DEVICE ITSELF. The policy forbids guessing
+   between iX and iXi. It was settled by reading the machine in the client's own
+   product photograph: both the console screen and the end effector are legibly
+   branded ARTAS iX. The filename on their server says artas-ix-top.png too, but a
+   filename is a label somebody typed and the hardware is the thing (H-41) — the
+   label only agreed with the artifact, it did not establish it.
 
    Copy is Layer 2 under §6 (procedure-named, softened framing) and consult-first:
    every CTA on the page asks for an evaluation, not a procedure. Claims banned by
@@ -79,28 +81,61 @@ function ArtasSection() {
     <section style={{ background: WHITE }}>
       <div className="pnw-pad" style={{ maxWidth: 1100, margin: '0 auto', padding: '58px 48px 64px' }}>
         <h2 className="pnw-h2" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 30, color: INK, textTransform: 'uppercase' }}>
-          The ARTAS&reg; Robotic Hair Restoration System
+          The ARTAS&reg; iX Robotic Hair Restoration System
         </h2>
         <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 13, color: TEAL, textTransform: 'uppercase', marginTop: 10 }}>
           Physician-directed robotic follicular unit extraction, in a regulated clinical setting.
         </div>
 
-        <p style={{ marginTop: 16, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
-          PNW Hair Restoration performs robotic follicular unit extraction using the ARTAS system, a
-          physician-directed device that assists with imaging the donor area and harvesting individual
-          follicular units.
-        </p>
-        <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
-          Dr. Higgins plans the procedure, sets the harvest parameters and directs the system throughout.
-          The ARTAS system assists the physician. It does not perform the procedure independently of him.
-        </p>
-        <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
-          Whether robotic FUE is medically appropriate is a question the consultation answers. The
-          evaluation reviews donor supply, the pattern and stage of loss, medical history and goals, and it
-          can conclude that a non-surgical option, or no procedure at all, is the better course.
-        </p>
+        <div className="pnw-artas-intro" style={{ display: 'grid', gridTemplateColumns: '1.25fr 0.75fr', gap: 40, alignItems: 'center', marginTop: 24 }}>
+          <div>
+            <p style={{ fontSize: 15.5, lineHeight: 1.65 }}>
+              PNW Hair Restoration performs robotic follicular unit extraction using the ARTAS iX, a
+              physician-directed device that assists with imaging the donor area and harvesting individual
+              follicular units.
+            </p>
+            <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65 }}>
+              Dr. Higgins plans the procedure, sets the harvest parameters and directs the system throughout.
+              The ARTAS iX assists the physician. It does not perform the procedure independently of him.
+            </p>
+            <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65 }}>
+              Whether robotic FUE is medically appropriate is a question the consultation answers. The
+              evaluation reviews donor supply, the pattern and stage of loss, medical history and goals, and it
+              can conclude that a non-surgical option, or no procedure at all, is the better course.
+            </p>
+          </div>
+          {/* contain, never cover: this is a product cutout on white with the arm at
+              the top of the frame, and any cover crop lops the robotic arm off —
+              which is the half of the picture that makes it read as a robot. */}
+          <div style={{ height: 340, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img
+              src="/images/artas-ix-device.png"
+              alt="The ARTAS iX robotic hair restoration system, showing the robotic arm above the console"
+              style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain' }}
+            />
+          </div>
+        </div>
 
-        <div className="pnw-artas-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, marginTop: 38 }}>
+        <div className="pnw-artas-figure" style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 40, alignItems: 'center', marginTop: 44, background: GREY, borderRadius: 12, padding: '30px 32px' }}>
+          <div style={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img
+              src="/images/artas-ix-mapping.png"
+              alt="The ARTAS iX console displaying a digital map of the donor area with individual follicular units selected for harvest"
+              style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain' }}
+            />
+          </div>
+          <div>
+            <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 20, color: INK, textTransform: 'uppercase' }}>Every Graft Is Selected Before It Is Harvested</div>
+            <p style={{ marginTop: 12, fontSize: 15, lineHeight: 1.65 }}>
+              The console images the donor area and maps individual follicular units. The physician reviews
+              that map and sets the selection criteria, so graft spacing and density are planned before
+              harvesting begins rather than judged in the moment.
+            </p>
+            <div style={{ marginTop: 18 }}><CtaButton label="Request Your Consultation" /></div>
+          </div>
+        </div>
+
+        <div className="pnw-artas-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, marginTop: 40 }}>
           {[
             { t: 'DIGITAL DONOR MAPPING', d: 'The system images the donor area so the physician can plan graft selection and spacing before harvesting begins.', icon: <ArtasGlyphMap /> },
             { t: 'PHYSICIAN-DIRECTED HARVESTING', d: 'Follicular units are harvested under the physician\u2019s direction, with the system assisting on angle, depth and selection.', icon: <ArtasGlyphHand /> },
@@ -117,7 +152,8 @@ function ArtasSection() {
         <p style={{ marginTop: 26, fontSize: 12.5, lineHeight: 1.55, color: '#5a6272', maxWidth: 780 }}>
           Robotic follicular unit extraction is a surgical procedure with associated risks, which are
           reviewed with the physician at consultation. Outcomes vary between patients and are not
-          guaranteed. ARTAS is a trademark of Venus Concept.
+          guaranteed. ARTAS and ARTAS iX are trademarks of Venus Concept. Device images courtesy of the
+          manufacturer.
         </p>
 
         <div style={{ marginTop: 22 }}><CtaButton label="Request Your Consultation" /></div>
@@ -135,6 +171,8 @@ export interface PnwLPProps {
      false so the three existing /c routes render byte-identically (H-67 — the
      second instance is the first test the first one ever got). */
   showArtas?: boolean
+  heroImage?: string
+  heroImageAlt?: string
 }
 
 export default function PnwLP({
@@ -143,6 +181,8 @@ export default function PnwLP({
   h1 = 'MEDICAL EVALUATION FOR THINNING HAIR & HAIR LOSS CONDITIONS',
   heroSub = 'Discover what causes hair loss and learn which treatment options fit each patient’s goals and hair biology.',
   showArtas = false,
+  heroImage = '/images/hero-clinic.png',
+  heroImageAlt = '',
 }: PnwLPProps) {
   return (
     <main style={{ fontFamily: B_FONT, color: TEXT, background: WHITE }}>
@@ -166,13 +206,13 @@ export default function PnwLP({
             <p style={{ marginTop: 10, fontSize: 16, lineHeight: 1.55, maxWidth: 520 }}>
               Request a consultation to understand hair loss and explore the available options.
             </p>
-            <div className="pnw-hero-photo" style={{ position: 'relative', marginTop: 26, borderRadius: 12, overflow: 'hidden', minHeight: 330 }}>
-              <img src="/images/hero-clinic.png" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
-              <div className="pnw-hero-trust" style={{ position: 'absolute', right: 16, bottom: 16, background: WHITE, borderRadius: 10, boxShadow: '0 8px 26px rgba(4,30,45,0.18)', padding: '14px 16px', maxWidth: 280 }}>
-                <Stars />
-                <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 13.5, color: INK, marginTop: 8, textTransform: 'uppercase' }}>Patient-Centered Care</div>
-                <div style={{ fontSize: 13, lineHeight: 1.45, marginTop: 4 }}>Patients appreciate our personalized, doctor-led approach.</div>
-              </div>
+            <div className="pnw-hero-photo" style={{ position: 'relative', marginTop: 26, borderRadius: 12, overflow: 'hidden', height: 400 }}>
+              <img src={heroImage} alt={heroImageAlt} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center center' }} />
+            </div>
+            <div className="pnw-hero-trust" style={{ marginTop: 16, background: WHITE, borderRadius: 10, boxShadow: '0 8px 26px rgba(4,30,45,0.10)', padding: '14px 16px', maxWidth: 340 }}>
+              <Stars />
+              <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 13.5, color: INK, marginTop: 8, textTransform: 'uppercase' }}>Patient-Centered Care</div>
+              <div style={{ fontSize: 13, lineHeight: 1.45, marginTop: 4 }}>Patients appreciate our personalized, doctor-led approach.</div>
             </div>
           </div>
           <div id="consult-form" style={{ background: WHITE, borderRadius: 12, boxShadow: '0 10px 34px rgba(4,30,45,0.10)', padding: '26px 24px', alignSelf: 'start' }}>

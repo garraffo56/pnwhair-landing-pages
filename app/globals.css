@@ -18,7 +18,7 @@ button { font-family: inherit; }
   /* Hero */
   .pnw-hero-grid  { grid-template-columns: 1fr !important; gap: 28px !important; }
   .pnw-hero-h1    { font-size: 28px !important; max-width: 100% !important; }
-  .pnw-hero-photo { min-height: 260px !important; }
+  .pnw-hero-photo { height: 300px !important; }
   .pnw-hero-trust { left: 16px !important; bottom: 12px !important; max-width: 250px !important; }
 
   /* Section padding */
@@ -27,6 +27,8 @@ button { font-family: inherit; }
   /* Grids */
   .pnw-steps-grid { grid-template-columns: 1fr 1fr !important; gap: 22px !important; }
   .pnw-artas-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .pnw-artas-intro  { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .pnw-artas-figure { grid-template-columns: 1fr !important; gap: 24px !important; padding: 24px 20px !important; }
   /* .pnw-steps-grid collapses to 1fr 1fr, which is right for its 4 cards and
      leaves a dangling orphan under 3. The ARTAS row carries its own class. */
   .pnw-cards-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
