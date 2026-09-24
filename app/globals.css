@@ -26,6 +26,9 @@ button { font-family: inherit; }
 
   /* Grids */
   .pnw-steps-grid { grid-template-columns: 1fr 1fr !important; gap: 22px !important; }
+  .pnw-artas-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  /* .pnw-steps-grid collapses to 1fr 1fr, which is right for its 4 cards and
+     leaves a dangling orphan under 3. The ARTAS row carries its own class. */
   .pnw-cards-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
   .pnw-icon-row   { gap: 26px !important; }
   .pnw-icon-row > div { width: 76px !important; height: 76px !important; }

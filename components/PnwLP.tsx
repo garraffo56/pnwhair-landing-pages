@@ -53,11 +53,88 @@ const PatientGlyph = () => (<svg {...ic} aria-hidden="true"><circle cx="12" cy="
 const DoctorGlyph = () => (<svg {...ic} aria-hidden="true"><circle cx="12" cy="7" r="4" /><path d="M5 21v-2a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v2" /><path d="M12 13v4M10 15h4" /></svg>)
 const PlanGlyph = () => (<svg {...ic} aria-hidden="true"><path d="M9 3h6v4H9z" /><path d="M5 7h14v14H5z" /><path d="M9 13h6M9 17h4" /></svg>)
 
+/* ARTAS DEVICE SECTION — PNW /c/artas only.
+
+   Trademark handling follows 03 - Resources/artas-device-naming-trademark-policy.md:
+   first mention on the page carries the symbol, every mention after it is bare.
+   The H1 is deliberately symbol-free (that policy's H1 carve-out), so the first
+   symbol-bearing mention is the H2 below.
+
+   NO GENERATION DESIGNATOR IS WRITTEN ANYWHERE ON THIS PAGE. The policy requires
+   confirming whether the practice runs an iX or an iXi before writing either, and
+   that is unconfirmed for PNW — their own site names the system with no generation.
+   Writing the wrong one is a rebuild, so the bare mark is used until Joe confirms.
+
+   Copy is Layer 2 under §6 (procedure-named, softened framing) and consult-first:
+   every CTA on the page asks for an evaluation, not a procedure. Claims banned by
+   effvit-hair-compliance-audit regardless of authorization — scarless, no incision,
+   painless, permanent, guaranteed, unlimited grafts, autonomous robot — are absent,
+   and the autonomy point is contradicted explicitly rather than merely omitted. */
+const ArtasGlyphMap = () => (<svg {...ic} aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3v18M3 12h18" /><circle cx="12" cy="12" r="2.5" /></svg>)
+const ArtasGlyphHand = () => (<svg {...ic} aria-hidden="true"><path d="M12 3v9" /><path d="M8.5 6.5L12 3l3.5 3.5" /><path d="M5 12a7 7 0 0 0 14 0" /><path d="M12 19v2" /></svg>)
+const ArtasGlyphChart = () => (<svg {...ic} aria-hidden="true"><path d="M4 19h16" /><path d="M7 19v-6M12 19V7M17 19v-9" /></svg>)
+
+function ArtasSection() {
+  return (
+    <section style={{ background: WHITE }}>
+      <div className="pnw-pad" style={{ maxWidth: 1100, margin: '0 auto', padding: '58px 48px 64px' }}>
+        <h2 className="pnw-h2" style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 30, color: INK, textTransform: 'uppercase' }}>
+          The ARTAS&reg; Robotic Hair Restoration System
+        </h2>
+        <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 13, color: TEAL, textTransform: 'uppercase', marginTop: 10 }}>
+          Physician-directed robotic follicular unit extraction, in a regulated clinical setting.
+        </div>
+
+        <p style={{ marginTop: 16, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
+          PNW Hair Restoration performs robotic follicular unit extraction using the ARTAS system, a
+          physician-directed device that assists with imaging the donor area and harvesting individual
+          follicular units.
+        </p>
+        <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
+          Dr. Higgins plans the procedure, sets the harvest parameters and directs the system throughout.
+          The ARTAS system assists the physician. It does not perform the procedure independently of him.
+        </p>
+        <p style={{ marginTop: 12, fontSize: 15.5, lineHeight: 1.65, maxWidth: 780 }}>
+          Whether robotic FUE is medically appropriate is a question the consultation answers. The
+          evaluation reviews donor supply, the pattern and stage of loss, medical history and goals, and it
+          can conclude that a non-surgical option, or no procedure at all, is the better course.
+        </p>
+
+        <div className="pnw-artas-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, marginTop: 38 }}>
+          {[
+            { t: 'DIGITAL DONOR MAPPING', d: 'The system images the donor area so the physician can plan graft selection and spacing before harvesting begins.', icon: <ArtasGlyphMap /> },
+            { t: 'PHYSICIAN-DIRECTED HARVESTING', d: 'Follicular units are harvested under the physician\u2019s direction, with the system assisting on angle, depth and selection.', icon: <ArtasGlyphHand /> },
+            { t: 'EVALUATION FIRST', d: 'Candidacy, graft counts and what to expect are reviewed with the physician before anything is scheduled.', icon: <ArtasGlyphChart /> },
+          ].map(s => (
+            <div key={s.t} style={{ background: GREY, borderRadius: 12, padding: '26px 22px' }}>
+              <Circle>{s.icon}</Circle>
+              <div style={{ fontFamily: H_FONT, fontWeight: 700, fontSize: 15, color: INK, textTransform: 'uppercase', marginTop: 16 }}>{s.t}</div>
+              <div style={{ fontSize: 14, lineHeight: 1.55, marginTop: 8 }}>{s.d}</div>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ marginTop: 26, fontSize: 12.5, lineHeight: 1.55, color: '#5a6272', maxWidth: 780 }}>
+          Robotic follicular unit extraction is a surgical procedure with associated risks, which are
+          reviewed with the physician at consultation. Outcomes vary between patients and are not
+          guaranteed. ARTAS is a trademark of Venus Concept.
+        </p>
+
+        <div style={{ marginTop: 22 }}><CtaButton label="Request Your Consultation" /></div>
+      </div>
+    </section>
+  )
+}
+
 export interface PnwLPProps {
   heroFormId: string
   bottomFormId: string
   h1?: string
   heroSub?: string
+  /* Renders the ARTAS device section between STEPS and DR. HIGGINS. Defaults to
+     false so the three existing /c routes render byte-identically (H-67 — the
+     second instance is the first test the first one ever got). */
+  showArtas?: boolean
 }
 
 export default function PnwLP({
@@ -65,6 +142,7 @@ export default function PnwLP({
   bottomFormId,
   h1 = 'MEDICAL EVALUATION FOR THINNING HAIR & HAIR LOSS CONDITIONS',
   heroSub = 'Discover what causes hair loss and learn which treatment options fit each patient’s goals and hair biology.',
+  showArtas = false,
 }: PnwLPProps) {
   return (
     <main style={{ fontFamily: B_FONT, color: TEXT, background: WHITE }}>
@@ -138,6 +216,8 @@ export default function PnwLP({
           </div>
         </div>
       </section>
+
+      {showArtas && <ArtasSection />}
 
       {/* DR. HIGGINS */}
       <section className="pnw-pad" style={{ maxWidth: 1100, margin: '0 auto', padding: '58px 48px' }}>
