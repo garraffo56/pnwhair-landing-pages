@@ -52,11 +52,45 @@ function injectFormEmbedOnce() {
   embedScheduled = true
   setTimeout(() => {
     if (document.querySelector(`script[src="${FORM_EMBED_SRC}"]`)) return
-    const s = document.createElement('script')
-    s.src = FORM_EMBED_SRC
-    s.async = true
-    document.body.appendChild(s)
+    appendFormEmbed(0)
   }, 50)
+}
+
+// form_embed.js is the ONLY thing that resizes the iframe. If it fails to load
+// the iframe keeps the hardcoded `height` prop forever, which renders a
+// truncated form: on a real iPhone 2026-11-16 a colgrove page painted 230px of
+// a 594px form -- two fields, no consent, no submit button -- and measured
+// clean in every local test, because a local test never drops the script.
+// Measured the same day with the script blocked: lafue and mollura iframes sat
+// at 400px against 665-758px of form, biltmore 620 against 707, sage-metuchen
+// 729 against 952. Retry once, then fall back to a height that fits the
+// tallest form on the fleet so the submit button is always reachable.
+const FORM_EMBED_FALLBACK_H = 980
+function appendFormEmbed(attempt: number) {
+  const s = document.createElement('script')
+  s.src = FORM_EMBED_SRC
+  s.async = true
+  s.onerror = () => {
+    s.remove()
+    if (attempt < 1) { setTimeout(() => appendFormEmbed(attempt + 1), 1200); return }
+    expandUnresizedForms()
+  }
+  document.body.appendChild(s)
+  // Belt and braces: the script can load and still never resize (blocked
+  // postMessage, slow widget). If nothing has grown by then, expand anyway.
+  setTimeout(expandUnresizedForms, 6000)
+}
+
+// Only touches iframes still sitting at their initial inline height, so a form
+// that resized normally is never given dead whitespace.
+function expandUnresizedForms() {
+  document.querySelectorAll<HTMLIFrameElement>('iframe[data-form-id]').forEach((f) => {
+    const initial = Number(f.getAttribute('data-height') || '0')
+    const now = Math.round(f.getBoundingClientRect().height)
+    if (initial && Math.abs(now - initial) <= 2 && now < FORM_EMBED_FALLBACK_H) {
+      f.style.height = `${FORM_EMBED_FALLBACK_H}px`
+    }
+  })
 }
 
 export default function GhlForm({
