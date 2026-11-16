@@ -73,7 +73,7 @@ function appendFormEmbed(attempt: number) {
   s.onerror = () => {
     s.remove()
     if (attempt < 1) { setTimeout(() => appendFormEmbed(attempt + 1), 1200); return }
-    expandUnresizedForms()
+    expandUnresizedForms('script-error')
   }
   document.body.appendChild(s)
   // Belt and braces: the script can load and still never resize (blocked
@@ -83,14 +83,42 @@ function appendFormEmbed(attempt: number) {
 
 // Only touches iframes still sitting at their initial inline height, so a form
 // that resized normally is never given dead whitespace.
-function expandUnresizedForms() {
+function expandUnresizedForms(reason: 'script-error' | 'no-resize' = 'no-resize') {
   document.querySelectorAll<HTMLIFrameElement>('iframe[data-form-id]').forEach((f) => {
     const initial = Number(f.getAttribute('data-height') || '0')
     const now = Math.round(f.getBoundingClientRect().height)
-    if (initial && Math.abs(now - initial) <= 2 && now < FORM_EMBED_FALLBACK_H) {
+    if (now < FORM_EMBED_FALLBACK_H) {
       f.style.height = `${FORM_EMBED_FALLBACK_H}px`
+      reportRescue(f, initial, reason)
     }
   })
+}
+
+// This is the number nobody has ever had: how often a real visitor met a
+// truncated form. The defect was invisible to every automated check we run,
+// because a local test never drops form_embed.js. Fire-and-forget; a telemetry
+// call must never be able to break the page it is reporting on.
+let rescueReported = false
+function reportRescue(f: HTMLIFrameElement, initial: number, reason: string) {
+  if (rescueReported) return
+  rescueReported = true
+  try {
+    const body = JSON.stringify({
+      path: location.pathname,
+      formId: f.getAttribute('data-form-id'),
+      initialH: initial,
+      rescuedTo: FORM_EMBED_FALLBACK_H,
+      viewportW: window.innerWidth,
+      isMobile: window.innerWidth < 768,
+      reason,
+    })
+    const url = 'https://control.effvit.com/api/lp-telemetry/form-rescue'
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
+    }
+  } catch { /* never surface */ }
 }
 
 export default function GhlForm({
