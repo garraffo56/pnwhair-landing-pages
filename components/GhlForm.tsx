@@ -114,7 +114,7 @@ function reportRescue(f: HTMLIFrameElement, initial: number, reason: string) {
     })
     const url = 'https://control.effvit.com/api/lp-telemetry/form-rescue'
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))
+      navigator.sendBeacon(url, new Blob([body], { type: 'text/plain;charset=UTF-8' })  // safelisted: sendBeacon cannot preflight)
     } else {
       fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
     }
